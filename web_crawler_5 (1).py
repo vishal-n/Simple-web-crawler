@@ -4,8 +4,12 @@ from bs4 import BeautifulSoup
 import re
 import requests
 import threading
+import sys
 
 def get_page(url):
+	"""
+	Returns the contents of a web page.
+	"""
 
 	with urllib.request.urlopen(url) as response:
 		contents = response.read()
@@ -25,6 +29,9 @@ def print_all_links(url):
 			break
 
 def get_all_links(url):
+	"""
+	Returns all the links in a web page.
+	"""
 
 	links = []
 	try:
@@ -57,3 +64,17 @@ def crawl_web(url):
 			crawl_web(link)
 
 crawl_web("https://stackoverflow.com/")
+
+if __name__ == '__main__':
+
+	t1 = threading.Thread(target=get_page, args=(sys.argv[1],))
+	t2 = threading.Thread(target=get_all_links, args=(sys.argv[1],))
+	t3 = threading.Thread(target=crawl_web, args=(sys.argv[1],))
+
+	t1.start()
+	t2.start()
+	t3.start()
+
+	t1.join()
+	t2.join()
+	t3.join()
