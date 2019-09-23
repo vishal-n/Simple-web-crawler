@@ -63,7 +63,7 @@ def crawl_web(url):
 		if link not in crawled:
 			crawl_web(link)
 
-crawl_web("https://stackoverflow.com/")
+#crawl_web("https://stackoverflow.com/")
 
 if __name__ == '__main__':
 
